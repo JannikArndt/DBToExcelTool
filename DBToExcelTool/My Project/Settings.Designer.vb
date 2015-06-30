@@ -55,7 +55,7 @@ Partial Public NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\V11.0; Database=AdventureWorks2012")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("AdventureWorks2012")>  _
     Public Property db() As String
         Get
             Return CType(Me("db"),String)
@@ -86,6 +86,42 @@ Partial Public NotInheritable Class MySettings
         End Get
         Set
             Me("file") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("(localdb)\V11.0")>  _
+    Public Property dataSource() As String
+        Get
+            Return CType(Me("dataSource"),String)
+        End Get
+        Set
+            Me("dataSource") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+    Public Property username() As String
+        Get
+            Return CType(Me("username"),String)
+        End Get
+        Set
+            Me("username") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+    Public Property password() As String
+        Get
+            Return CType(Me("password"),String)
+        End Get
+        Set
+            Me("password") = value
         End Set
     End Property
 End Class

@@ -7,7 +7,7 @@
         xmlns:My="clr-namespace:DBToExcelTool.My" 
         x:Class="MainWindow"
         mc:Ignorable="d"
-        Title="DB To Excel Converter" Height="250" Width="375">
+        Title="DB To Excel Converter" Height="350" Width="375">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -15,26 +15,38 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100px" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid.DataContext>
             <local:MySettings/>
         </Grid.DataContext>
-        <Label Grid.Row="0" Grid.Column="0" Content="Datenbank" VerticalAlignment="Center" />
-        <TextBox Grid.Row="0" Grid.Column="1" x:Name="input_db" Margin="5" VerticalAlignment="Center" Text="{Binding db}" />
+        <Label Grid.Row="0" Grid.Column="0" Content="Datenquelle" VerticalAlignment="Center" />
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="input_source" Margin="5" VerticalAlignment="Center" Text="{Binding dataSource}" />
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Max. Zeilen" VerticalAlignment="Center" />
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="input_limit" Margin="5" VerticalAlignment="Center" Text="{Binding limit}" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Datenbank" VerticalAlignment="Center" />
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="input_db" Margin="5" VerticalAlignment="Center" Text="{Binding db}" />
+      
+        <Label Grid.Row="2" Grid.Column="0" Content="Username" VerticalAlignment="Center" />
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="input_username" Margin="5" VerticalAlignment="Center" Text="{Binding username}" />
+
+        <Label Grid.Row="3" Grid.Column="0" Content="Passwort" VerticalAlignment="Center" />
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="input_password" Margin="5" VerticalAlignment="Center" Text="{Binding password}" />
         
-        <Label Grid.Row="2" Grid.Column="0" Content="Dateiname" VerticalAlignment="Center" />
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="input_file" Margin="5" VerticalAlignment="Center" Text="{Binding file}" />
+        <Label Grid.Row="4" Grid.Column="0" Content="Max. Zeilen" VerticalAlignment="Center" />
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="input_limit" Margin="5" VerticalAlignment="Center" Text="{Binding limit}" />
+        
+        <Label Grid.Row="5" Grid.Column="0" Content="Dateiname" VerticalAlignment="Center" />
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="input_file" Margin="5" VerticalAlignment="Center" Text="{Binding file}" />
 
-        <Button x:Name="button" Content="Konvertieren" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Grid.Row="3" Grid.Column="3" Margin="5"/>
+        <Button Grid.Row="6" Grid.Column="3" x:Name="button" Content="Konvertieren" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130"  Margin="5"/>
 
-        <Label x:Name="progress"  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="" VerticalAlignment="Center" />
+        <Label  Grid.Row="7" Grid.Column="0" x:Name="progress"  Grid.ColumnSpan="2" Content="" VerticalAlignment="Center" />
 
     </Grid>
 </Window>

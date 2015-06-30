@@ -3,13 +3,22 @@
   <Profiles />
   <Settings>
     <Setting Name="db" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=(localdb)\V11.0; Database=AdventureWorks2012</Value>
+      <Value Profile="(Default)">AdventureWorks2012</Value>
     </Setting>
     <Setting Name="limit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2000</Value>
     </Setting>
     <Setting Name="file" Type="System.String" Scope="User">
       <Value Profile="(Default)">AdventureWorks2012.xlsx</Value>
+    </Setting>
+    <Setting Name="dataSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">(localdb)\V11.0</Value>
+    </Setting>
+    <Setting Name="username" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="password" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

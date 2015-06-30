@@ -6,22 +6,23 @@ Imports OfficeOpenXml
 
 Class MainWindow
 
-    Private Connection As New SqlConnection
-    Private Limit = 2000
-
     Private Sub ClickConvert(sender As Object, e As RoutedEventArgs) Handles button.Click
         Try
             MySettings.Default.Save()
             button.IsEnabled = False
 
+            Dim dataSource = input_source.Text
             Dim dbName = input_db.Text
+            Dim username = input_username.Text
+            Dim password = input_password.Text
             Dim fileName = input_file.Text
+            Dim limit = Integer.Parse(input_limit.Text)
 
             If (File.Exists(fileName)) Then
                 File.Delete(fileName)
             End If
 
-            Dim Thread1 As New Thread(Sub() CreateExcelFile(dbName, fileName))
+            Dim Thread1 As New Thread(Sub() CreateExcelFile(dataSource, username, password, dbName, fileName, limit))
             Thread1.Start()
 
         Catch ex As Exception
@@ -29,12 +30,12 @@ Class MainWindow
         End Try
     End Sub
 
-    Private Sub CreateExcelFile(dbname As String, excelName As String)
+
+    Private Sub CreateExcelFile(dataSource As String, userName As String, password As String, dbname As String, excelName As String, limit As Integer)
         ' DB Verbindung
-        If (Connection.State <> ConnectionState.Open) Then
-            Connection.ConnectionString = "Data Source=(localdb)\V11.0; Database=" & dbname
-            Connection.Open()
-        End If
+        Dim Connection As New SqlConnection
+        Connection.ConnectionString = "Data Source=" & dataSource & "; Database=" & dbname & "; User Id=" & userName & "; Password=" & password
+        Connection.Open()
 
         ' Excel-Datei
         Dim excel As New ExcelPackage(New FileInfo(excelName))
@@ -43,36 +44,35 @@ Class MainWindow
         Dim tableNames = TableSelect("TABLE_SCHEMA, TABLE_NAME", "INFORMATION_SCHEMA.TABLES",
                                     "TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = '" & dbname & "'", Connection)
 
-        ' Zählvariablen
-        Dim tableCount = tableNames.Rows.Count
-        Dim counter = 1
-
         ' Für jede Tabelle alle Daten laden und ins Excel speichern
-        For Each row As DataRow In tableNames.Rows
+
+        For tableIndex = 1 To tableNames.Rows.Count
             ' Fortschritt anzeigen
-            counter += 1
+            Dim row = tableNames.Rows(tableIndex - 1)
 
             ' Inhalt laden
             Dim tableContent = TableSelect("*", dbname & "." & row(0) & "." & row(1), "", Connection)
 
             ' Worksheet laden oder erstellen
-            Dim worksheet = Nothing  'excel.Workbook.Worksheets.FirstOrDefault(Name = row(0) & "." & row(1))
-            worksheet = If(worksheet, excel.Workbook.Worksheets.Add(row(0) & "." & row(1)))
+            Dim worksheet = excel.Workbook.Worksheets.Add(row(0) & "." & row(1))
 
-            Dim rowCount = Math.Min(tableContent.Rows.Count, Limit)
+            Dim rowCount = Math.Min(tableContent.Rows.Count, limit)
+
             ' Worksheet befüllen
             For rowIndex = 1 To rowCount
-                Dispatcher.BeginInvoke(Sub() progress.Content = "Tabelle " & counter & "/" & tableCount & " Zeile " & rowIndex & "/" & rowCount)
+                Dispatcher.BeginInvoke(Sub() progress.Content = "Tabelle " & tableIndex & "/" & tableNames.Rows.Count & ", Zeile " & rowIndex & "/" & rowCount)
                 For columnIndex = 1 To tableContent.Columns.Count
                     worksheet.Cells(rowIndex, columnIndex).Value = tableContent.Rows(rowIndex - 1)(columnIndex - 1)
                 Next
             Next
         Next
 
-        Dispatcher.BeginInvoke(Sub() progress.Content = "Datenbank erfolgreich In Excel-Datei konvertiert.")
-        Dispatcher.BeginInvoke(Sub() button.IsEnabled = True)
-
+        Dispatcher.BeginInvoke(Sub()
+                                   progress.Content = "Datenbank erfolgreich In Excel-Datei konvertiert."
+                                   button.IsEnabled = True
+                               End Sub)
         excel.Save()
+        Connection.Close()
     End Sub
 
     Private Function TableSelect(columns As String, table As String, where As String, connection As SqlConnection) As DataTable
