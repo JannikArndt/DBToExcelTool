@@ -26,8 +26,11 @@
         <Label Grid.Row="0" Grid.Column="0" Content="Datenbank" VerticalAlignment="Center" />
         <TextBox Grid.Row="0" Grid.Column="1" x:Name="input_db" Margin="5" VerticalAlignment="Center" Text="{Binding db}" />
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Dateiname" VerticalAlignment="Center" />
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="input_file" Margin="5" VerticalAlignment="Center" Text="{Binding file}" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Max. Zeilen" VerticalAlignment="Center" />
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="input_limit" Margin="5" VerticalAlignment="Center" Text="{Binding limit}" />
+        
+        <Label Grid.Row="2" Grid.Column="0" Content="Dateiname" VerticalAlignment="Center" />
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="input_file" Margin="5" VerticalAlignment="Center" Text="{Binding file}" />
 
         <Button x:Name="button" Content="Konvertieren" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Grid.Row="3" Grid.Column="3" Margin="5"/>
 

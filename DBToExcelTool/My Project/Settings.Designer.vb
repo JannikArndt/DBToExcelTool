@@ -55,7 +55,7 @@ Partial Public NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("AdventureWorks2012")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\V11.0; Database=AdventureWorks2012")>  _
     Public Property db() As String
         Get
             Return CType(Me("db"),String)
@@ -67,13 +67,13 @@ Partial Public NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-    Public Property table() As String
+     Global.System.Configuration.DefaultSettingValueAttribute("2000")>  _
+    Public Property limit() As Integer
         Get
-            Return CType(Me("table"),String)
+            Return CType(Me("limit"),Integer)
         End Get
         Set
-            Me("table") = value
+            Me("limit") = value
         End Set
     End Property
     
@@ -86,18 +86,6 @@ Partial Public NotInheritable Class MySettings
         End Get
         Set
             Me("file") = value
-        End Set
-    End Property
-    
-    <Global.System.Configuration.UserScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-    Public Property worksheet() As String
-        Get
-            Return CType(Me("worksheet"),String)
-        End Get
-        Set
-            Me("worksheet") = value
         End Set
     End Property
 End Class
