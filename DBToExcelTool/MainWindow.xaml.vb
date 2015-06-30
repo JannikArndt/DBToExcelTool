@@ -6,6 +6,11 @@ Imports OfficeOpenXml
 
 Class MainWindow
 
+    ''' <summary>
+    ''' What happens when you click on the "convert"-button
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub ClickConvert(sender As Object, e As RoutedEventArgs) Handles button.Click
         Try
             MySettings.Default.Save()
@@ -30,7 +35,15 @@ Class MainWindow
         End Try
     End Sub
 
-
+    ''' <summary>
+    ''' Connects to the database, loads up all tables and converts them into an excel file
+    ''' </summary>
+    ''' <param name="dataSource">Something like (localdb)\V11.0</param>
+    ''' <param name="userName">A username, if needed</param>
+    ''' <param name="password">Password for database access</param>
+    ''' <param name="dbname">The name of the database</param>
+    ''' <param name="excelName">The name of the excel file, including ".xslx"</param>
+    ''' <param name="limit">Limits the amount of rows that are converted</param>
     Private Sub CreateExcelFile(dataSource As String, userName As String, password As String, dbname As String, excelName As String, limit As Integer)
         ' DB Verbindung
         Dim Connection As New SqlConnection
@@ -75,6 +88,14 @@ Class MainWindow
         Connection.Close()
     End Sub
 
+    ''' <summary>
+    ''' Rund a select statement on the given connection and returns a filled DataTable
+    ''' </summary>
+    ''' <param name="columns">The columns to select, comma-seperated</param>
+    ''' <param name="table">The tablename</param>
+    ''' <param name="where">A where-clause, without the "WHERE".</param>
+    ''' <param name="connection">An open (!) connection</param>
+    ''' <returns>A filled DataTable</returns>
     Private Function TableSelect(columns As String, table As String, where As String, connection As SqlConnection) As DataTable
         Dim sqlString = "Select " & columns & " FROM " & table &
             If(String.IsNullOrWhiteSpace(where), "", " WHERE " & where)
@@ -85,5 +106,4 @@ Class MainWindow
 
         Return DataTable
     End Function
-
 End Class
